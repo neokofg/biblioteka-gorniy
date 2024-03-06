@@ -50,10 +50,6 @@
                                                 <h6 class="dropdown-item-heading">Жизнь библиотеки</h6>
                                                 <div class="text-small">Рабочие будни.</div>
                                             </a>
-                                            <a href="{{route('books')}}" class="dropdown-item dropdown-item-large w-inline-block" tabindex="0">
-                                                <h6 class="dropdown-item-heading">Книги</h6>
-                                                <div class="text-small">Онлайн библиотека.</div>
-                                            </a>
                                             <a href="{{route('filialy')}}" class="dropdown-item dropdown-item-large w-inline-block" tabindex="0">
                                                 <h6 class="dropdown-item-heading">Филиалы</h6>
                                                 <div class="text-small">Филиалы библиотеки.</div>
@@ -67,7 +63,7 @@
                                             </a>
                                             <a href="{{route('listablebooks')}}" class="dropdown-item dropdown-item-large w-inline-block" tabindex="0">
                                                 <h6 class="dropdown-item-heading">Книги</h6>
-                                                <div class="text-small">Онлайн книги.</div>
+                                                <div class="text-small">Онлайн библиотека.</div>
                                             </a>
                                         </div>
                                     </div>
