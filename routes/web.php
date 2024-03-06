@@ -24,6 +24,7 @@ Route::view('/history', 'history')->name('history');
 Route::view('/ilim', 'ilim')->name('ilim');
 Route::view('/auth', 'auth')->name('auth')->middleware('login');
 Route::view('/register', 'register')->name('register')->middleware('login');
+Route::get('/listableBooks', [\App\Http\Controllers\GetDataController::class, 'GetListableBooks'])->name('listablebooks');
 Route::view('/admin', 'admin')->name('admin')->middleware('auth')->middleware('admin');
 Route::get('/newspage', [\App\Http\Controllers\GetDataController::class,'GetNewsID'])->name('NewsLink');
 Route::get('/eventspage', [\App\Http\Controllers\GetDataController::class,'GetEventsID'])->name('EventsLink');
@@ -73,6 +74,7 @@ Route::name('editor')->group(function (){
     Route::view('/editor', 'editor');
     Route::get('/editor', [\App\Http\Controllers\GetDataController::class,'GetEditor']);
 });
+Route::post('/uploadListableBook', [\App\Http\Controllers\UploadController::class, 'uploadListableBook'])->name('UploadListableBook')->middleware('admin');
 Route::view('/filialy','filialy')->name('filialy');
 Route::post('/uploadMainVideo', [\App\Http\Controllers\UploadController::class, 'UploadMainVideo'])->name('UploadMainVideo')->middleware('admin');
 Route::post('/uploadNews', [\App\Http\Controllers\UploadController::class, 'UploadNews'])->name('UploadNews')->middleware('admin');
@@ -89,6 +91,7 @@ Route::get('/deletePost', [\App\Http\Controllers\UploadController::class, 'Delet
 Route::get('/deleteVideo', [\App\Http\Controllers\UploadController::class, 'DeleteVideo'])->name('DeleteVideo')->middleware('admin');
 Route::get('/deleteMainVideo', [\App\Http\Controllers\UploadController::class, 'DeleteMainVideo'])->name('DeleteMainVideo')->middleware('admin');
 Route::get('/deleteBooks', [\App\Http\Controllers\UploadController::class, 'DeleteBooks'])->name('DeleteBooks')->middleware('admin');
+Route::get('/deleteListableBook', [\App\Http\Controllers\UploadController::class, 'DeleteListableBook'])->name('DeleteListableBook')->middleware('admin');
 
 Route::post('/giveBook', [\App\Http\Controllers\UploadController::class, 'GiveBook'])->name('GiveBook')->middleware('admin');
 Route::post('/getBook', [\App\Http\Controllers\UploadController::class, 'GetBook'])->name('GetBook')->middleware('admin');

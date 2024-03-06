@@ -7252,3 +7252,50 @@ table.ikswebs th {
 .text-primary-33 {
     color: #0e7dff;
 }
+#bookModal {
+    display: none; /* Скрыть модальное окно по умолчанию */
+    z-index: 1; /* Установите над другим контентом */
+    overflow: hidden; /* Включить прокрутку, если нужно */
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%; /* Ширина на всю ширину */
+    height: 100%; /* Высота на всю высоту */
+}
+
+#background {
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    top: 0;
+    width: 100%; /* Ширина на всю ширину */
+    height: 100%; /* Высота на всю высоту */
+    overflow: hidden; /* Включить прокрутку, если нужно */
+    background-color: rgb(0,0,0); /* Цвет фона */
+    background-color: rgba(0,0,0,0.4); /* Цвет фона с непрозрачностью */
+}
+
+#flipbook {
+    width: 800px; /* Ширина вашей книги */
+    height: 600px; /* Высота вашей книги */
+}
+
+/* Стилизация кнопки закрытия */
+.close {
+    color: white;
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}

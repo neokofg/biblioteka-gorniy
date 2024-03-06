@@ -65,6 +65,10 @@
                                                 <div class="text-small">{{ $editorpage->description }}</div>
                                                 @endforeach
                                             </a>
+                                            <a href="{{route('listablebooks')}}" class="dropdown-item dropdown-item-large w-inline-block" tabindex="0">
+                                                <h6 class="dropdown-item-heading">Книги</h6>
+                                                <div class="text-small">Онлайн книги.</div>
+                                            </a>
                                         </div>
                                     </div>
                                 </nav>

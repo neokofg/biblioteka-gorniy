@@ -113,6 +113,47 @@
                     <div class="panel-body">
                         <div>
                             <h4 class="heading">
+                                Добавить книгу
+                            </h4>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="style-guide-content">
+
+                    <div class="row">
+                        <div class="style-guide-content-item">
+                            <form action="{{route('UploadListableBook')}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="w-form">
+                                    <h6>PDF файл</h6>
+                                    <input name="file" type="file"><br><br>
+                                    <h6>Заголовок</h6>
+                                    <input type="text" class="form-input w-input" name="name" maxlength="256" placeholder="Описание"><br>
+                                    <h6>Описание</h6>
+                                    <textarea type="text" class="form-input w-input" name="description">Описание</textarea><br>
+                                    <button class="button w-button">
+                                        Добавить
+                                    </button>
+                                    @error('news')
+                                    <div>{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="style-guide-container">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div>
+                            <h4 class="heading">
                                 Создание новости
                             </h4>
                             <div>

@@ -97,4 +97,10 @@ class GetDataController extends Controller
         $pagecontents = DB::table('editorpage')->get();
         return view('editor',compact('pagecontents'));
     }
+
+    public function GetListableBooks(Request $request)
+    {
+        $books = DB::table('listable_books')->get();
+        return view('listablebooks', compact(['books']));
+    }
 }

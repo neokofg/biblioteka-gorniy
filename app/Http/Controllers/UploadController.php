@@ -26,7 +26,7 @@ class UploadController extends Controller
         $data = array('name' => $name,'description' => $description,'content' => $content,'image' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('news')->insert($data);
-        return redirect()->back()->with('success', 'Новость добавлена!');   
+        return redirect()->back()->with('success', 'Новость добавлена!');
     }
     protected function UploadEvents(Request $request){
         $validateFields = $request->validate([
@@ -48,7 +48,7 @@ class UploadController extends Controller
         $data = array('name' => $name, 'date' =>  $date,'time' => $time, 'description' => $description,'content' => $content,'image' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('events')->insert($data);
-        return redirect()->back()->with('success', 'Мероприятие добавлено!');  
+        return redirect()->back()->with('success', 'Мероприятие добавлено!');
     }
     protected function UploadDocument(Request $request){
         $validateFields = $request->validate([
@@ -62,7 +62,7 @@ class UploadController extends Controller
         $data = array('name' => $name, 'document' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('documents')->insert($data);
-        return redirect()->back()->with('success', 'Документ добавлен!');  
+        return redirect()->back()->with('success', 'Документ добавлен!');
     }
     protected function DeleteDocument(Request $request){
         $document = $request->input('id');
@@ -81,7 +81,7 @@ class UploadController extends Controller
         $data = array('name' => $name, 'youtube_url' => $youtube_url,'description' => $description,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('video')->insert($data);
-        return redirect()->back()->with('success', 'Видео добавлено!');  
+        return redirect()->back()->with('success', 'Видео добавлено!');
     }
     protected function GiveBook(Request $request){
         $validateFields = $request->validate([
@@ -95,7 +95,7 @@ class UploadController extends Controller
         $data = array('name' => $bookname, 'phonenumber' => $phonenumber, 'date' => $bookdate,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('books')->insert($data);
-        return redirect()->back()->with('success', 'Книга сдана!');  
+        return redirect()->back()->with('success', 'Книга сдана!');
     }
     protected function UploadReview(Request $request){
         $validateFields = $request->validate([
@@ -132,7 +132,7 @@ class UploadController extends Controller
         $data = array('name' => $name, 'date' =>  $date, 'description' => $description,'content' => $content,'image' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
             "updated_at" => date('Y-m-d H:i:s'));
         DB::table('projects')->insert($data);
-        return redirect()->back()->with('success', 'Проект добавлен!');  
+        return redirect()->back()->with('success', 'Проект добавлен!');
     }
     protected function GetBook(Request $request){
        $validateFields = $request->validate([
@@ -140,7 +140,7 @@ class UploadController extends Controller
         ]);
         $id = $request->input('id');
         DB::table('books')->where('id','=',$id)->delete();
-        return redirect()->back()->with('success', 'Книга возвращена!');  
+        return redirect()->back()->with('success', 'Книга возвращена!');
     }
     protected function DeletePost(Request $request){
 	$validateFields = $request->validate([
@@ -175,7 +175,7 @@ class UploadController extends Controller
 	}
         $data = array('name' => $pagename, 'description' => $pagedescription,'content' => $pagecontent,'image' => $pageimagename,"updated_at" => date('Y-m-d H:i:s'));
         DB::table($posttype)->where('id',$id)->update($data);
-        return redirect()->back()->with('success', 'Успешно!');  
+        return redirect()->back()->with('success', 'Успешно!');
     }
     protected function DeleteVideo(Request $request){
     	$validateFields = $request->validate([
@@ -202,7 +202,7 @@ class UploadController extends Controller
             "updated_at" => date('Y-m-d H:i:s'));
         }
         DB::table('mainvideo')->insert($data);
-        return redirect()->back()->with('success', 'Контент добавлен!');  
+        return redirect()->back()->with('success', 'Контент добавлен!');
     }
     protected function DeleteMainVideo(Request $request){
         $validateFields = $request->validate([
@@ -237,7 +237,7 @@ class UploadController extends Controller
         ]);
         $id = $request->input('id');
         DB::table('booksview')->where('id','=',$id)->delete();
-        return redirect()->back()->with('success', 'Книга удалена!');  
+        return redirect()->back()->with('success', 'Книга удалена!');
     }
     protected function EditorPageUpload(Request $request){
         $validateFields = $request->validate([
@@ -249,6 +249,35 @@ class UploadController extends Controller
         $pagecontent = $request->input('pageedit');
         $data = array('pagecontent' => $pagecontent,'name' => $name,'description' => $description, "created_at" =>  date('Y-m-d H:i:s'),"updated_at" => date('Y-m-d H:i:s'));
         DB::table('editorpage')->where('id', '=', 1)->update($data);
+        return redirect()->back()->with('success', 'Успешно!');
+    }
+
+    public function uploadListableBook(Request $request)
+    {
+        $validateFields = $request->validate([
+            'file' => 'required|file|mimes:pdf',
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $name = $request->input('name');
+        $description = $request->input('description');
+        $file= $request->file('file');
+        $filename= date('YmdHi').hash_hmac('sha256',$file->getClientOriginalName(),'file') . '.' . $file->getClientOriginalExtension();
+        $file-> move(public_path('books'), $filename);
+        $data = array('name' => $name, 'file' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
+            "updated_at" => date('Y-m-d H:i:s'), 'description' => $description);
+        DB::table('listable_books')->insert($data);
+        return redirect()->back()->with('success', 'Проект добавлен!');
+    }
+
+    public function DeleteListableBook(Request $request)
+    {
+        $validateFields = $request->validate([
+            'id' => 'required'
+        ]);
+        $id =$request->input('id');
+        DB::table('listable_books')->where('id',$id)->delete();
         return redirect()->back()->with('success', 'Успешно!');
     }
 }
