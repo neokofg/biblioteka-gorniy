@@ -34,6 +34,9 @@
                 </div>
             </div>
         @endif
+            <div class="section-title">
+                <h3 class="display-heading-4 no-bottom-space">Книги</h3>
+            </div>
         <div role="list" style="margin-bottom: 25px" class="blog-grid w-dyn-items">
             @foreach($books as $book)
                 <div role="listitem" style="height: 300px; width: 100%" class="w-dyn-item">
