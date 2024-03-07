@@ -65,8 +65,9 @@
     </div>
     <div id="bookModal">
         <div onclick="closeBook()" id="background"></div>
-        <div id="flipbook"></div>
-        <p style="display:none" id="loading">loading...</p>
+        <img src="/loading.gif" id="loading" alt="">
+        <div id="flipbook">
+        </div>
     </div>
     <div class="footer wf-section">
         <div class="container">
@@ -130,6 +131,7 @@
         async function openBook(filePath) {
             $('#bookModal').css('display','flex');
             $('#flipbook').innerHTML = '';
+            $('#loading').show();
 
             const pdfDoc = await pdfjsLib.getDocument(filePath).promise;
 
@@ -148,12 +150,26 @@
                 const img = document.createElement('img');
                 img.src = canvas.toDataURL();
                 $('#flipbook').append(img);
+                var windowWidth = $(window).width();
+                var flipbookSizeOptions;
 
-                $('#flipbook').turn({
-                    width: 800,
-                    height: 600,
-                    autoCenter: true
-                });
+                // Проверка ширины экрана
+                if (windowWidth <= 768) {
+                    // Для экранов меньше 768 пикселей
+                    flipbookSizeOptions = {
+                        width: '100%',
+                        height: '50%',
+                    };
+                } else {
+                    // Для экранов больше или равных 768 пикселей
+                    flipbookSizeOptions = {
+                        width: 800,
+                        height: 600,
+                        autoCenter: true
+                    };
+                }
+                $('#flipbook').turn(flipbookSizeOptions);
+                $('#loading').hide();
             }
 
             await initializeWithFirstPage();

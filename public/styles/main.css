@@ -7276,12 +7276,6 @@ table.ikswebs th {
     background-color: rgb(0,0,0); /* Цвет фона */
     background-color: rgba(0,0,0,0.4); /* Цвет фона с непрозрачностью */
 }
-
-#flipbook {
-    width: 800px; /* Ширина вашей книги */
-    height: 600px; /* Высота вашей книги */
-}
-
 /* Стилизация кнопки закрытия */
 .close {
     color: white;
@@ -7298,4 +7292,10 @@ table.ikswebs th {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
+}
+
+#loading {
+    display:none;
+    width: 40px;
+    height: 40px;
 }
