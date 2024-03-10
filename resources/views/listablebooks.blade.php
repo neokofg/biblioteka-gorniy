@@ -137,7 +137,10 @@
             $('#flipbook').empty();
             $('#loading').show();
 
-            const pdfDoc = await pdfjsLib.getDocument(filePath).promise;
+            const pdfDoc = await pdfjsLib.getDocument({
+                url: filePath,
+                rangeChunkSize: 128 * 1024, // размер чанка в байтах, например, 128kb
+            }).promise;
 
             // Определяем размеры для первой страницы и инициализируем turn.js
             async function initializeFirstPage() {
@@ -162,7 +165,7 @@
                 $('#loading').hide();
             }
 
-            const BATCH_SIZE = 5; // Количество страниц для одновременной загрузки
+            const BATCH_SIZE = 3; // Количество страниц для одновременной загрузки
 
             // Функция для добавления страниц партиями
             async function addPagesInBatches(startPage) {
