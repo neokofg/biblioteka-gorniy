@@ -207,6 +207,7 @@
 
         function closeBook() {
             $('#bookModal').hide();
+            $('#flipbook').attr('style', '');
             isBookLoading = false; // Прерываем загрузку страниц
         }
     </script>
