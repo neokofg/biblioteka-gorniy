@@ -128,75 +128,83 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="//code.jivo.ru/widget/pPTVUYW9y8" async=""></script>
     <script type="text/javascript">
+        let isBookLoading = false;
         async function openBook(filePath) {
+            if (isBookLoading) return; // Если уже идет загрузка, прерываем новый вызов
+
+            isBookLoading = true;
             $('#bookModal').css('display','flex');
-            $('#flipbook').innerHTML = '';
+            $('#flipbook').empty();
             $('#loading').show();
 
             const pdfDoc = await pdfjsLib.getDocument(filePath).promise;
 
-            // Начальная инициализация flipbook с первой страницей
-            async function initializeWithFirstPage() {
+            // Определяем размеры для первой страницы и инициализируем turn.js
+            async function initializeFirstPage() {
                 const firstPage = await pdfDoc.getPage(1);
                 const viewport = firstPage.getViewport({scale: 1.5});
                 const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
-                await firstPage.render({
-                    canvasContext: canvas.getContext('2d'),
-                    viewport: viewport
-                }).promise;
+                await firstPage.render({ canvasContext: context, viewport: viewport }).promise;
 
                 const img = document.createElement('img');
                 img.src = canvas.toDataURL();
                 $('#flipbook').append(img);
-                var windowWidth = $(window).width();
-                var flipbookSizeOptions;
 
-                // Проверка ширины экрана
-                if (windowWidth <= 768) {
-                    // Для экранов меньше 768 пикселей
-                    flipbookSizeOptions = {
-                        width: '100%',
-                        height: '50%',
-                    };
-                } else {
-                    // Для экранов больше или равных 768 пикселей
-                    flipbookSizeOptions = {
-                        width: 800,
-                        height: 600,
-                        autoCenter: true
-                    };
-                }
-                $('#flipbook').turn(flipbookSizeOptions);
+                // Инициализация turn.js с базовым параметром
+                $('#flipbook').turn({
+                    width: window.innerWidth >= 768 ? 800 : '100%', // Удвоенная ширина для двух страниц
+                    height: window.innerWidth >= 768 ? 600 : '50%',
+                });
                 $('#loading').hide();
             }
 
-            await initializeWithFirstPage();
+            const BATCH_SIZE = 5; // Количество страниц для одновременной загрузки
 
-            // Постепенно загружаем и добавляем оставшиеся страницы
-            for (let num = 2; num <= pdfDoc.numPages; num++) {
-                const page = await pdfDoc.getPage(num);
-                var viewport = page.getViewport({scale: 1.5});
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
+            // Функция для добавления страниц партиями
+            async function addPagesInBatches(startPage) {
+                const endPage = pdfDoc.numPages;
+                for (let pageNum = startPage; pageNum <= endPage  && isBookLoading; pageNum += BATCH_SIZE) {
+                    const promises = [];
+                    for (let i = pageNum; i < pageNum + BATCH_SIZE && i <= endPage && isBookLoading; i++) {
+                        promises.push(loadPage(i));
+                    }
+                    // Ожидаем загрузку партии страниц и добавляем их в книгу
+                    const pagesDataUrls = await Promise.all(promises);
+                    pagesDataUrls.forEach(dataUrl => {
+                        const img = document.createElement('img');
+                        img.src = dataUrl;
+                        $('#flipbook').turn('addPage', img);
+                    });
+                }
+            }
+
+            // Функция для загрузки одной страницы
+            async function loadPage(pageNum) {
+                const page = await pdfDoc.getPage(pageNum);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
+                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                return canvas.toDataURL();
+            }
 
-                await page.render({
-                    canvasContext: context,
-                    viewport: viewport
-                }).promise;
+            await initializeFirstPage(); // Инициализация первой страницы и книги
+            await addPagesInBatches(2); // Постепенное добавление остальных страниц начиная со второй
 
-                // Конвертация canvas в изображение и добавление в flipbook
-                var img = document.createElement('img');
-                img.src = canvas.toDataURL();
-                $(`#flipbook`).turn('addPage', img, num);
+            if (isBookLoading) {
+                // Завершим загрузку только если флаг isBookLoading остался в true
+                $('#loading').hide();
             }
         }
 
         function closeBook() {
             $('#bookModal').hide();
+            isBookLoading = false; // Прерываем загрузку страниц
         }
     </script>
 </body>
