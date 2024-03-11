@@ -134,7 +134,6 @@
 
             isBookLoading = true;
             $('#bookModal').css('display','flex');
-            $('#flipbook').empty();
             $('#loading').show();
 
             const pdfDoc = await pdfjsLib.getDocument({
@@ -160,7 +159,7 @@
                 // Инициализация turn.js с базовым параметром
                 $('#flipbook').turn({
                     width: window.innerWidth >= 768 ? 800 : '100%', // Удвоенная ширина для двух страниц
-                    height: window.innerWidth >= 768 ? 600 : '50%',
+                    height: window.innerHeight >= 768 && window.innerWidth >= 425 ? '50%' : window.innerHeight >= 760 && window.innerWidth >= 768 ? 700 : window.innerHeight >= 600 ? 500 : '50%',
                 });
                 $('#loading').hide();
             }
@@ -207,6 +206,7 @@
 
         function closeBook() {
             $('#bookModal').hide();
+            $('#flipbook').empty();
             $('#flipbook').attr('style', '');
             isBookLoading = false; // Прерываем загрузку страниц
         }

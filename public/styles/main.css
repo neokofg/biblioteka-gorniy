@@ -7258,6 +7258,7 @@ table.ikswebs th {
     overflow: hidden; /* Включить прокрутку, если нужно */
     justify-content: center;
     align-items: center;
+    margin-top: 40px;
     position: fixed;
     left: 0;
     top: 0;
