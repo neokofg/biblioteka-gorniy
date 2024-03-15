@@ -155,11 +155,24 @@
                 const img = document.createElement('img');
                 img.src = canvas.toDataURL();
                 $('#flipbook').append(img);
+                let width, height;
 
+                // Проверка для мобильных устройств
+                if (window.innerWidth <= 425) {
+                    // Процентное значение от ширины экрана для полной адаптации
+                    width = '90%';
+                    // Высота соответствует ширине для поддержания пропорций или может быть установлена в некоторое фиксированное значение/процент от высоты экрана
+                    height = '50%'; // здесь может быть другое значение, в зависимости от желаемых пропорций
+                } else {
+                    // На больших экранах используем предыдущую логику
+                    width = Math.max(400, Math.min(window.innerWidth * 0.8, 800));
+                    height = Math.max(300, Math.min(window.innerHeight * 0.8, 600));
+                }
                 // Инициализация turn.js с базовым параметром
                 $('#flipbook').turn({
-                    width: window.innerWidth >= 768 ? 800 : '100%', // Удвоенная ширина для двух страниц
-                    height: window.innerHeight >= 768 && window.innerWidth >= 425 ? '50%' : window.innerHeight >= 760 && window.innerWidth >= 768 ? 700 : window.innerHeight >= 600 ? 500 : '50%',
+                    width: width,
+                    height: height,
+                    // Другие опции...
                 });
                 $('#loading').hide();
             }
