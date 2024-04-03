@@ -24,6 +24,7 @@ Route::view('/ilim', 'ilim')->name('ilim');
 Route::view('/auth', 'auth')->name('auth')->middleware('login');
 Route::view('/register', 'register')->name('register')->middleware('login');
 Route::get('/listableBooks', [\App\Http\Controllers\GetDataController::class, 'GetListableBooks'])->name('listablebooks');
+Route::get('/book/{id}', [\App\Http\Controllers\GetDataController::class, 'getBook'])->name('getBook');
 Route::view('/admin', 'admin')->name('admin')->middleware('auth')->middleware('admin');
 Route::get('/newspage', [\App\Http\Controllers\GetDataController::class,'GetNewsID'])->name('NewsLink');
 Route::get('/eventspage', [\App\Http\Controllers\GetDataController::class,'GetEventsID'])->name('EventsLink');

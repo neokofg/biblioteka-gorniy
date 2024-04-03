@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\YoutubeURL;
+use function Psy\debug;
 
 class UploadController extends Controller
 {
@@ -263,10 +264,46 @@ class UploadController extends Controller
         $name = $request->input('name');
         $description = $request->input('description');
         $file= $request->file('file');
-        $filename= date('YmdHi').hash_hmac('sha256',$file->getClientOriginalName(),'file') . '.' . $file->getClientOriginalExtension();
-        $file-> move(public_path('books'), $filename);
-        $data = array('name' => $name, 'file' => $filename,"created_at" =>  date('Y-m-d H:i:s'),
-            "updated_at" => date('Y-m-d H:i:s'), 'description' => $description);
+        $filename= date('YmdHi').hash_hmac('sha256',$file->getClientOriginalName(),'file');
+        $file-> move(public_path('books/'.$filename), $filename. '.' . $file->getClientOriginalExtension());
+
+
+        $pdf = new \TvT\PdfToHtml\Pdf(public_path('books/'.$filename.'/'.$filename. '.' . $file->getClientOriginalExtension()), [
+            'pdftohtml_path' => env('PDF_TO_HTML_PATH'),
+            'pdfinfo_path' => env('PDF_INFO_PATH'),
+            'generate' => [
+                'singlePage' => false,
+                'imageJpeg' => false,
+                'ignoreImages' => false,
+                'zoom' => 1,
+                'noFrames' => false,
+            ],
+            'html' => [
+                'inlineCss' => true,
+                'inlineImages' => true,
+                'onlyContent' => true,
+            ]
+        ]);
+        print_r($pdf);
+
+        $htmlFolderPath = public_path('books/'.$filename.'/html_pages');
+        if (!file_exists($htmlFolderPath)) {
+            mkdir($htmlFolderPath, 0777, true);
+        }
+
+        // Сохраните каждую страницу PDF как HTML-файл в папке
+        foreach ($pdf->getHtml()->getAllPages() as $pageNumber => $page) {
+            file_put_contents($htmlFolderPath.'/page_'.$pageNumber.'.html', $page);
+        }
+
+        $data = array(
+            'name' => $name,
+            'file' => $filename,
+            "created_at" => date('Y-m-d H:i:s'),
+            "updated_at" => date('Y-m-d H:i:s'),
+            'description' => $description,
+            "count" => $pdf->countPages()
+        );
         DB::table('listable_books')->insert($data);
         return redirect()->back()->with('success', 'Проект добавлен!');
     }
