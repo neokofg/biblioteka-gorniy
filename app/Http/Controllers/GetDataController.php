@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function Sodium\add;
+use function Sodium\compare;
 
 class GetDataController extends Controller
 {
@@ -121,7 +122,7 @@ class GetDataController extends Controller
         return view('listablebooks', compact(['books']));
     }
 
-    public function getBook($id)
+    public function GetApiBook($id)
     {
         $book = DB::table('listable_books')->find($id);
 
@@ -138,4 +139,9 @@ class GetDataController extends Controller
             "count_pages" => $book->count
         ]);
     }
+
+    public function GetBook($id) {
+        return view('book', compact('id'));
+    }
+
 }

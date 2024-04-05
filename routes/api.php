@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
- Route::get('/book/{id}',  [\App\Http\Controllers\GetDataController::class, 'getBook']);
+ Route::get('/book/{id}',  [\App\Http\Controllers\GetDataController::class, 'GetApiBook']);

@@ -24,7 +24,7 @@ Route::view('/ilim', 'ilim')->name('ilim');
 Route::view('/auth', 'auth')->name('auth')->middleware('login');
 Route::view('/register', 'register')->name('register')->middleware('login');
 Route::get('/listableBooks', [\App\Http\Controllers\GetDataController::class, 'GetListableBooks'])->name('listablebooks');
-Route::get('/book/{id}', [\App\Http\Controllers\GetDataController::class, 'getBook'])->name('getBook');
+Route::group(['middleware' => ['cors']], function ($router) {Route::get('/book/{id}', [\App\Http\Controllers\GetDataController::class, 'GetBook'])->name('getBook'); });
 Route::view('/admin', 'admin')->name('admin')->middleware('auth')->middleware('admin');
 Route::get('/newspage', [\App\Http\Controllers\GetDataController::class,'GetNewsID'])->name('NewsLink');
 Route::get('/eventspage', [\App\Http\Controllers\GetDataController::class,'GetEventsID'])->name('EventsLink');
@@ -94,7 +94,7 @@ Route::get('/deleteBooks', [\App\Http\Controllers\UploadController::class, 'Dele
 Route::get('/deleteListableBook', [\App\Http\Controllers\UploadController::class, 'DeleteListableBook'])->name('DeleteListableBook')->middleware('admin');
 
 Route::post('/giveBook', [\App\Http\Controllers\UploadController::class, 'GiveBook'])->name('GiveBook')->middleware('admin');
-Route::post('/getBook', [\App\Http\Controllers\UploadController::class, 'GetBook'])->name('GetBook')->middleware('admin');
+Route::post('/getBook', [\App\Http\Controllers\GetDataController::class, 'GetApiBook'])->name('GetBook')->middleware('admin');
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'CreateUser'])->name('CreateUser')->middleware('login');
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'LoginUser'])->name('LoginUser');

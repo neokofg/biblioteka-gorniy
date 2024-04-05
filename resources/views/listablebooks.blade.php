@@ -46,7 +46,7 @@
                             <h6 class="medium-heading">{{$book->name}}</h6>
                             <p>{{$book->description}}</p>
                             <div class="blog-panel-foot">
-                                <button style="background-color:#3c5ccf; color: #ffffff;" class="badge w-inline-block " onclick="openBook('/books/{{$book->file}}')"> Открыть </button>
+                                <a style="background-color:#3c5ccf; color: #ffffff;" class="badge w-inline-block " href="/book/{{$book->id}}"> Открыть </a>
                                 @if(Auth::check())
                                     @if(Auth::user()->role)
                                         <form style="display:inline" action="{{route('DeleteListableBook')}}" method="GET">
@@ -61,12 +61,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
-    <div id="bookModal">
-        <div onclick="closeBook()" id="background"></div>
-        <img src="/loading.gif" id="loading" alt="">
-        <div id="flipbook">
         </div>
     </div>
     <div class="footer wf-section">
@@ -122,107 +116,10 @@
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.5.1.min.dc5e7f18c8.js?site=5dcb2e333e05bec4ef2fee2f" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="js/main.js" type="text/javascript"></script>
-    <script src="js/turnjs4/lib/turn.min.js"  type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <script src="/js/jquery-3.5.1.min.dc5e7f18c8.js?site=5dcb2e333e05bec4ef2fee2f" type="text/javascript" crossorigin="anonymous"></script>
+    <script src="/js/main.js" type="text/javascript"></script>
+    <script src="/js/turnjs4/lib/turn.min.js"  type="text/javascript"></script>
+    <script src="/https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
     <script src="//code.jivo.ru/widget/pPTVUYW9y8" async=""></script>
-    <script type="text/javascript">
-        let isBookLoading = false;
-        async function openBook(filePath) {
-            if (isBookLoading) return; // Если уже идет загрузка, прерываем новый вызов
-
-            isBookLoading = true;
-            $('#bookModal').css('display','flex');
-            $('#loading').show();
-
-            const pdfDoc = await pdfjsLib.getDocument({
-                url: filePath,
-                rangeChunkSize: 128 * 1024, // размер чанка в байтах, например, 128kb
-            }).promise;
-
-            // Определяем размеры для первой страницы и инициализируем turn.js
-            async function initializeFirstPage() {
-                const firstPage = await pdfDoc.getPage(1);
-                const viewport = firstPage.getViewport({scale: 1.5});
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                await firstPage.render({ canvasContext: context, viewport: viewport }).promise;
-
-                const img = document.createElement('img');
-                img.src = canvas.toDataURL();
-                $('#flipbook').append(img);
-                let width, height;
-
-                // Проверка для мобильных устройств
-                if (window.innerWidth <= 425) {
-                    // Процентное значение от ширины экрана для полной адаптации
-                    width = '90%';
-                    // Высота соответствует ширине для поддержания пропорций или может быть установлена в некоторое фиксированное значение/процент от высоты экрана
-                    height = '50%'; // здесь может быть другое значение, в зависимости от желаемых пропорций
-                } else {
-                    // На больших экранах используем предыдущую логику
-                    width = Math.max(400, Math.min(window.innerWidth * 0.8, 800));
-                    height = Math.max(300, Math.min(window.innerHeight * 0.8, 600));
-                }
-                // Инициализация turn.js с базовым параметром
-                $('#flipbook').turn({
-                    width: width,
-                    height: height,
-                    // Другие опции...
-                });
-                $('#loading').hide();
-            }
-
-            const BATCH_SIZE = 3; // Количество страниц для одновременной загрузки
-
-            // Функция для добавления страниц партиями
-            async function addPagesInBatches(startPage) {
-                const endPage = pdfDoc.numPages;
-                for (let pageNum = startPage; pageNum <= endPage  && isBookLoading; pageNum += BATCH_SIZE) {
-                    const promises = [];
-                    for (let i = pageNum; i < pageNum + BATCH_SIZE && i <= endPage && isBookLoading; i++) {
-                        promises.push(loadPage(i));
-                    }
-                    // Ожидаем загрузку партии страниц и добавляем их в книгу
-                    const pagesDataUrls = await Promise.all(promises);
-                    pagesDataUrls.forEach(dataUrl => {
-                        const img = document.createElement('img');
-                        img.src = dataUrl;
-                        $('#flipbook').turn('addPage', img);
-                    });
-                }
-            }
-
-            // Функция для загрузки одной страницы
-            async function loadPage(pageNum) {
-                const page = await pdfDoc.getPage(pageNum);
-                const viewport = page.getViewport({ scale: 1.5 });
-                const canvas = document.createElement('canvas');
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-                return canvas.toDataURL();
-            }
-
-            await initializeFirstPage(); // Инициализация первой страницы и книги
-            await addPagesInBatches(2); // Постепенное добавление остальных страниц начиная со второй
-
-            if (isBookLoading) {
-                // Завершим загрузку только если флаг isBookLoading остался в true
-                $('#loading').hide();
-            }
-        }
-
-        function closeBook() {
-            $('#bookModal').hide();
-            $('#flipbook').empty();
-            $('#flipbook').attr('style', '');
-            isBookLoading = false; // Прерываем загрузку страниц
-        }
-    </script>
 </body>
 </html>

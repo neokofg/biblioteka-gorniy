@@ -4,7 +4,7 @@
 <x-head></x-head>
 
 <body>
-    
+
     <!-- Шапка -->
     <x-navbar>
     </x-navbar>
@@ -14,7 +14,7 @@
         <div class="panel" style="background-color: hsla(147, 68%, 50%, 0.26);">
             <div class="panel-body panel-body-small">
                 <div class="text-small">
-                    <img src="/images/icons/bx-check-circle.svg.svg">{!! \Session::get('success') !!}
+                    <img src="{{public_path('/images/icons/bx-check-circle.svg.svg')}}">{!! \Session::get('success') !!}
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="panel" style="background-color: hsla(0, 80%, 46%, 0.26);">
             <div class="panel-body panel-body-small">
                 <div class="text-small">
-                    <img src="/images/icons/bx-error-circle.svg.svg"> Ошибка:
+                    <img src="{{public_path('/images/icons/bx-error-circle.svg.svg')}}"> Ошибка:
                     <ul style="margin-left: 20px;">
                         @foreach($errors->all() as $error)
                 		<li>{{$error}}</li>
@@ -39,9 +39,9 @@
         <div class="container" style="margin-top: 24px;">
 
         <div data-animation="slide" data-duration="500" data-infinite="1" class="slider w-slider" role="region" aria-label="карусель">
-            
 
-            
+
+
             <div class="rounded-image w-slider-mask" id="w-slider-mask-1">
                 <div class="w-slide" aria-label="1 из 2" role="group" style="transform: translateX(0px); opacity: 1;">
                     <div class="section hero-panel">
@@ -57,8 +57,8 @@
                     </div>
                 </div>
                 @foreach($mainvideo->take(3) as $video)
-                <?php if($video->youtube == 0){}else{ 
-                    
+                <?php if($video->youtube == 0){}else{
+
                         $url = $video->youtube;
                         if (str_contains($url, '&')) {
                             $url = explode('&', $url);
@@ -89,14 +89,14 @@
                                 </div>
                             @endif
                             @endif
-                            <?php 
+                            <?php
                             $videoexplode = $video->video;
                             $videoexploded = explode('.', $videoexplode);
                             $mime = $videoexploded[1]
                             ?>
                             @if($mime == 'webm' OR $mime == 'mp4' OR $mime == 'avi')
                                 <video width='100%' height='100%' loop autoplay muted>
-                                  <source style="width:100%;height:100%" src="/images/{{$video->video}}">
+                                  <source style="width:100%;height:100%" src="{{public_path('/images/{{$video->video}}')}}">
                                   Your browser does not support the video tag.
                                 </video>
                             @else
@@ -166,7 +166,7 @@
                         читателей.
                     </div>
                 </div>
-                <div class="column-2-ab w-col w-col-6"><img src="/images/main/1.png" loading="lazy" alt=""></div>
+                <div class="column-2-ab w-col w-col-6"><img src="{{public_path('/images/main/1.png'}}" loading="lazy" alt=""></div>
             </div>
         </div>
         <div class="card-media">
@@ -219,7 +219,7 @@
                         </div>
                         <div class="media-h">Видеоконтент библиотеки</div>
                         <a class="link-newd" href="videos">Перейти</a>
-                        <div class="crd-pic-grn"><img src="/images/main/5.png" loading="lazy" alt=""></div>
+                        <div class="crd-pic-grn"><img src="{{public_path('/images/main/5.png'}}" loading="lazy" alt=""></div>
                     </div>
                 </div>
                 <div class="column-5 w-col w-col-4">
@@ -303,12 +303,12 @@
             }
         </style>
         <script>
-    
+
 (function() { "use strict"; function ownKeys(e, t) { var n = Object.keys(e); if (Object.getOwnPropertySymbols) { var r = Object.getOwnPropertySymbols(e); if (t) r = r.filter(function(t) { return Object.getOwnPropertyDescriptor(e, t).enumerable }); n.push.apply(n, r) } return n } function _objectSpread(e) { for (var t = 1; t < arguments.length; t++) { var n = null != arguments[t] ? arguments[t] : {}; if (t % 2) ownKeys(Object(n), true).forEach(function(t) { _defineProperty(e, t, n[t]) }); else if (Object.getOwnPropertyDescriptors) Object.defineProperties(e, Object.getOwnPropertyDescriptors(n)); else ownKeys(Object(n)).forEach(function(t) { Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(n, t)) }) } return e } function _defineProperty(e, t, n) { if (t in e) Object.defineProperty(e, t, { value: n, enumerable: true, configurable: true, writable: true }); else e[t] = n; return e } var POS_PREFIX_87 = "--pos-banner-fluid-87__", posOptionsInitialBanner87 = { background: "#FFFFFF", "grid-template-columns": "1fr 1fr", "grid-template-rows": "300px", "max-width": "1422px", "text-font-size": "32px", "text-small-font-size": "18px", "text-margin": "0 0px 12px 0", "description-margin": "0 0 24px 0", "button-wrap-max-width": "118px", "bg-url": "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-0.svg')", "bg-url-position": "center top", "content-padding": "42px 50px", "logo-wrap-padding": "20px 16px 16px", "logo-width": "78px", "logo-wrap-top": "0", "slogan-font-size": "15px", "logo-box-shadow": "none", "text-small-margin": "0px 150px 0px 0", "content-grid-row": 1 }, setStyles = function(e, t) { var n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : POS_PREFIX_87; Object.keys(e).forEach(function(r) { t.style.setProperty(n + r, e[r]) }) }, removeStyles = function(e, t) { var n = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : POS_PREFIX_87; Object.keys(e).forEach(function(e) { t.style.removeProperty(n + e) }) }; function changePosBannerOnResize() { var e = document.documentElement, t = _objectSpread({}, posOptionsInitialBanner87), n = document.getElementById("js-show-iframe-wrapper"), r = n ? n.offsetWidth : document.body.offsetWidth; if (r > 300) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-1.svg')", t["grid-template-rows"] = "244px auto", t["grid-template-columns"] = "53% 1", t["text-font-size"] = "14px"; if (r > 360) t["description-margin"] = "0 0 20px 0", t["content-padding"] = "20px 55px 20px 24px", t["button-wrap-max-width"] = "118px", t["grid-template-columns"] = "53% 1", t["text-font-size"] = "16px"; if (r > 415) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-2.svg')", t["content-padding"] = "36px 25px 52px 24px", t["grid-template-columns"] = "53% 1", t["text-font-size"] = "18px"; if (r > 568) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83.svg')", t["text-font-size"] = "24px", t["text-small-font-size"] = "14px", t["grid-template-columns"] = "53% 1", t["grid-template-rows"] = "332px", t["content-grid-row"] = "1", t["content-padding"] = "54px 28px", t["description-margin"] = "0 0 24px 0", t["button-wrap-max-width"] = "245px"; if (r > 783) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-3.svg')", t["grid-template-columns"] = "1fr 1fr", t["grid-template-rows"] = "268px", t["text-small-font-size"] = "14px", t["content-padding"] = "40px 24px 40px 50px", t["button-wrap-max-width"] = "118px", t["text-font-size"] = "24px"; if (r > 991) t["grid-template-columns"] = "1fr 1fr"; if (r > 1098) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-4.svg')", t["grid-template-rows"] = "300px", t["text-font-size"] = "32px", t["text-small-font-size"] = "18px", t["content-padding"] = "42px 50px", t["logo-width"] = "78px", t["slogan-font-size"] = "15px", t["logo-wrap-padding"] = "20px 16px 16px", t["text-small-margin"] = "0px 150px 0px 0"; if (r > 1400) t["bg-url"] = "url('https://pos.gosuslugi.ru/bin/banner-fluid/83/banner-fluid-bg-83-5.svg')", t["max-width"] = "1422px", t["grid-template-columns"] = "1fr 1fr", t["content-padding"] = "34px 0px 34px 100px", t["logo-box-shadow"] = "0px 1px 4px #E3EBFC, 0px 24px 48px rgba(230, 235, 245, 0.4)", t["text-small-margin"] = "0", t["text-margin"] = "0 140px 12px 0"; setStyles(t, e) } changePosBannerOnResize(), window.addEventListener("resize", changePosBannerOnResize), window.onunload = function() { var e = document.documentElement, t = _objectSpread({}, posOptionsInitialBanner87); window.removeEventListener("resize", changePosBannerOnResize), removeStyles(t, e) }; })()
 </script>
     <div id="js-show-iframe-wrapper" bis_skin_checked="1" class="">
         <div class="pos-banner-fluid bf-87" bis_skin_checked="1">
-    
+
             <div class="bf-87__decor" bis_skin_checked="1">
                 <div class="bf-87__logo-wrap" bis_skin_checked="1">
                     <img class="bf-87__logo" src="https://pos.gosuslugi.ru/bin/banner-fluid/gosuslugi-logo-blue.svg" alt="Госуслуги">
@@ -324,7 +324,7 @@
                 Напишите&nbsp;— решим!
               </span>
           </div>
-    
+
           <div class="bf-87__bottom-wrap" bis_skin_checked="1">
             <div class="bf-87__btn-wrap" bis_skin_checked="1">
               <!-- pos-banner-btn_2 не удалять; другие классы не добавлять -->
@@ -333,7 +333,7 @@
             </div>
           </div>
         </div>
-    
+
       </div>
      </div>
     <!-- FAQ -->
@@ -473,8 +473,8 @@
     </div>
     <!-- Футер -->
     </div>
-    
-      
+
+
     <!-- СКРИПТЫ -->
     <script src="js/jquery-3.5.1.min.dc5e7f18c8.js?site=5dcb2e333e05bec4ef2fee2f" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="js/main.js" type="text/javascript"></script>
