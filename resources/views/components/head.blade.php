@@ -2,8 +2,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{public_path('/styles/main.css')}}" rel="stylesheet">
-    <link href="{{public_path('/styles/20.12.22.css')}}" rel="stylesheet">
+    <link href="{{asset('/styles/main.css')}}" rel="stylesheet">
+    <link href="{{asset('/styles/20.12.22.css')}}" rel="stylesheet">
     <title>МБУ "МЦБС"</title>
     <link rel="shortcut icon" href="/images/biblogo.png">
     <meta property="og:image" content="/images/head.jpg">

@@ -14,7 +14,7 @@
         <div class="panel" style="background-color: hsla(147, 68%, 50%, 0.26);">
             <div class="panel-body panel-body-small">
                 <div class="text-small">
-                    <img src="{{public_path('/images/icons/bx-check-circle.svg.svg')}}">{!! \Session::get('success') !!}
+                    <img src="{{asset('/images/icons/bx-check-circle.svg.svg')}}">{!! \Session::get('success') !!}
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="panel" style="background-color: hsla(0, 80%, 46%, 0.26);">
             <div class="panel-body panel-body-small">
                 <div class="text-small">
-                    <img src="{{public_path('/images/icons/bx-error-circle.svg.svg')}}"> Ошибка:
+                    <img src="{{asset('/images/icons/bx-error-circle.svg.svg')}}"> Ошибка:
                     <ul style="margin-left: 20px;">
                         @foreach($errors->all() as $error)
                 		<li>{{$error}}</li>
@@ -96,7 +96,7 @@
                             ?>
                             @if($mime == 'webm' OR $mime == 'mp4' OR $mime == 'avi')
                                 <video width='100%' height='100%' loop autoplay muted>
-                                  <source style="width:100%;height:100%" src="{{public_path('/images/{{$video->video}}')}}">
+                                  <source style="width:100%;height:100%" src="{{asset('/images/'.$video->video)}}">
                                   Your browser does not support the video tag.
                                 </video>
                             @else
@@ -166,7 +166,7 @@
                         читателей.
                     </div>
                 </div>
-                <div class="column-2-ab w-col w-col-6"><img src="{{public_path('/images/main/1.png'}}" loading="lazy" alt=""></div>
+                <div class="column-2-ab w-col w-col-6"><img src="{{asset('/images/main/1.png')}}" loading="lazy" alt=""></div>
             </div>
         </div>
         <div class="card-media">
@@ -219,7 +219,7 @@
                         </div>
                         <div class="media-h">Видеоконтент библиотеки</div>
                         <a class="link-newd" href="videos">Перейти</a>
-                        <div class="crd-pic-grn"><img src="{{public_path('/images/main/5.png'}}" loading="lazy" alt=""></div>
+                        <div class="crd-pic-grn"><img src="{{asset('/images/main/5.png')}}" loading="lazy" alt=""></div>
                     </div>
                 </div>
                 <div class="column-5 w-col w-col-4">
