@@ -1,6 +1,6 @@
 .container-book {
     width: 100%;
-    transform-origin: top center;
+    transform-origin: top left;
     transition: transform 0.2s linear;
     user-select: none;
 }
@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform-origin: top center;
+    transform-origin: top left;
     transition: transform 0.2s linear;
     user-select: none;
 }
@@ -28,7 +28,7 @@
 
 #currentPage {
     text-align: center;
-    transform-origin: top center;
+    transform-origin: top left;
     transition: transform 0.2s linear;
 }
 

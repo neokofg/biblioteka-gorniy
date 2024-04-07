@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="{{asset('styles/main.css')}}" rel="stylesheet">
     <link href="{{asset('styles/20.12.22.css')}}" rel="stylesheet">
     <link href="{{asset('styles/book.css')}}" rel="stylesheet">
@@ -83,7 +84,15 @@
     </div>
 
 
-    <div style="overflow-y: overlay; overflow-x: hidden;height: 77.57vh;">
+    <div style="overflow-y: overlay; overflow-x: overlay; height: 77.57vh;">
+        <div id="loading" style="display: none; width: 100%; height: -webkit-fill-available; ">
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;height: -webkit-fill-available;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+        </div>
         <div class="bookPage" id="bookDetails">
             <div id="bookContent" style="align-content: start;z-index: -1;rotate: 0deg;height: -webkit-fill-available;"></div>
         </div>
@@ -159,42 +168,48 @@
     });
 
     function loadPage(page) {
-        if (cache[page]) {
-            // Если страница в кэше, используйте кэшированную версию
-            $('#bookContent').html(cache[page]);
-            currentPage = page;
-            $('#currentPageInput').val(currentPage);
-            $('#allPages').text(totalPages)
-            $('#pagesRange').attr({
-                "value": currentPage
-            });
-        } else {
-            // Если страницы нет в кэше, загрузите ее
-            $.ajax({
-                url: allPagesUrl[page-1],
-                type: 'GET',
-                success: function(res) {
-                    cache[page] = res; // Добавление страницы в кэш
-                    $('#bookContent').html(res);
-                    currentPage = page;
-                    $('#allPages').text(totalPages)
-                    $('#currentPageInput').val(currentPage);
-                    $('#pagesRange').attr({
-                        "value": currentPage
-                    });
-                    if (currentPage === 1) {
-                        $('#prevPage').css('display', 'none');
-                    } else {
-                        $('#prevPage').css('display', 'block');
-                    }
-                    if (currentPage === totalPages) {
-                        $('#nextPage').css('display', 'none');
-                    } else {
-                        $('#nextPage').css('display', 'block');
-                    }
-                }
-            });
-        }
+        $('#loading').show();
+        const timerId = setTimeout(() => console.log('hello!'), 99000);
+        // clearTimeout(timerId);
+        // if (cache[page]) {
+        //     // Если страница в кэше, используйте кэшированную версию
+        //     $('#bookContent').html(cache[page]);
+        //     currentPage = page;
+        //     $('#currentPageInput').val(currentPage);
+        //     $('#allPages').text(totalPages)
+        //     $('#pagesRange').attr({
+        //         "value": currentPage
+        //     });
+        //     $('#loading').hide();
+        // } else {
+        //     // Если страницы нет в кэше, загрузите ее
+        //     $.ajax({
+        //         url: allPagesUrl[page-1],
+        //         type: 'GET',
+        //         success: function(res) {
+        //             cache[page] = res; // Добавление страницы в кэш
+        //             $('#bookContent').html(res);
+        //             currentPage = page;
+        //             $('#allPages').text(totalPages)
+        //             $('#currentPageInput').val(currentPage);
+        //             $('#pagesRange').attr({
+        //                 "value": currentPage
+        //             });
+        //             if (currentPage === 1) {
+        //                 $('#prevPage').css('display', 'none');
+        //             } else {
+        //                 $('#prevPage').css('display', 'block');
+        //             }
+        //             if (currentPage === totalPages) {
+        //                 $('#nextPage').css('display', 'none');
+        //             } else {
+        //                 $('#nextPage').css('display', 'block');
+        //             }
+        //             $('#loading').hide();
+        //         }
+        //     });
+        // }
+        // $('#loading').hide();
     }
 
     $('#currentPageInput').on('change', function() {
@@ -250,8 +265,8 @@
         let yDiff = y2 - y1
 
         if(Math.abs(xDiff) > Math.abs(yDiff)) {
-            if(xDiff > 0) loadPage(currentPage - 1)
-            else loadPage(currentPage + 1)
+            if(xDiff > 0) if(currentPage > 1) loadPage(currentPage - 1)
+            else if(currentPage < totalPages) loadPage(currentPage + 1)
         }
 
         x1 = null
