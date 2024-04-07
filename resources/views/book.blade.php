@@ -166,48 +166,43 @@
     });
 
     function loadPage(page) {
-        // $('#bookContent').hide();
         $('#loading').show();
-        // if (cache[page]) {
-        //     // Если страница в кэше, используйте кэшированную версию
-        //     $('#bookContent').html(cache[page]);
-        //     currentPage = page;
-        //     $('#currentPageInput').val(currentPage);
-        //     $('#allPages').text(totalPages)
-        //     $('#pagesRange').attr({
-        //         "value": currentPage
-        //     });
-        //     $('#loading').hide();
-        // } else {
-            // Если страницы нет в кэше, загрузите ее
-            // $.ajax({
-            //     url: allPagesUrl[page-1],
-            //     type: 'GET',
-            //     success: function(res) {
-            //         cache[page] = res; // Добавление страницы в кэш
-            //         $('#bookContent').html(res);
-            //         currentPage = page;
-            //         $('#allPages').text(totalPages)
-            //         $('#currentPageInput').val(currentPage);
-            //         $('#pagesRange').attr({
-            //             "value": currentPage
-            //         });
-            //         if (currentPage === 1) {
-            //             $('#prevPage').css('display', 'none');
-            //         } else {
-            //             $('#prevPage').css('display', 'block');
-            //         }
-            //         if (currentPage === totalPages) {
-            //             $('#nextPage').css('display', 'none');
-            //         } else {
-            //             $('#nextPage').css('display', 'block');
-            //         }
-            //         $('#loading').hide();
-            //     }
-            // });
-        // }
-        // $('#bookContent').show();
-        // $('#loading').hide();
+        if (cache[page]) {
+            // Если страница в кэше, используйте кэшированную версию
+            $('#bookContent').html(cache[page]);
+            currentPage = page;
+            $('#currentPageInput').val(currentPage);
+            $('#allPages').text(totalPages)
+            $('#pagesRange').attr({
+                "value": currentPage
+            });
+        } else {
+            $.ajax({
+                url: allPagesUrl[page-1],
+                type: 'GET',
+                success: function(res) {
+                    cache[page] = res; // Добавление страницы в кэш
+                    $('#bookContent').html(res);
+                    currentPage = page;
+                    $('#allPages').text(totalPages)
+                    $('#currentPageInput').val(currentPage);
+                    $('#pagesRange').attr({
+                        "value": currentPage
+                    });
+                    if (currentPage === 1) {
+                        $('#prevPage').css('display', 'none');
+                    } else {
+                        $('#prevPage').css('display', 'block');
+                    }
+                    if (currentPage === totalPages) {
+                        $('#nextPage').css('display', 'none');
+                    } else {
+                        $('#nextPage').css('display', 'block');
+                    }
+                }
+            });
+        }
+        $('#loading').hide();
     }
 
     $('#currentPageInput').on('change', function() {
