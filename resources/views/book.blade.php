@@ -85,7 +85,7 @@
 
 
     <div style="overflow-y: overlay; overflow-x: overlay; height: 77.57vh;">
-        <div id="loading" style="display: none; width: 100%; height: -webkit-fill-available; ">
+        <div id="loading" style="display: none; width: 100%; height: -webkit-fill-available; z-index: 999 ">
             <div style="display: flex; justify-content: center; align-items: center; width: 100%;height: -webkit-fill-available;">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -168,6 +168,7 @@
     });
 
     function loadPage(page) {
+        $('#bookContent').hide();
         $('#loading').show();
         if (cache[page]) {
             // Если страница в кэше, используйте кэшированную версию
@@ -207,6 +208,7 @@
                 }
             });
         }
+        $('#bookContent').show();
         $('#loading').hide();
     }
 
@@ -263,8 +265,20 @@
         let yDiff = y2 - y1
 
         if(Math.abs(xDiff) > Math.abs(yDiff)) {
-            if(xDiff > 0) if(currentPage > 1) loadPage(currentPage - 1)
-            else if(currentPage < totalPages) loadPage(currentPage + 1)
+            if(xDiff > 0) {
+                if(currentPage > 1) {
+                    loadPage(currentPage - 1)
+                } else {
+                    return
+                }
+            }
+            else {
+                if(currentPage < totalPages) {
+                    loadPage(currentPage + 1)
+                } else {
+                    return
+                }
+            }
         }
 
         x1 = null
