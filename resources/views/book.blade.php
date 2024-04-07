@@ -28,11 +28,9 @@
 <body style="padding: 0; margin: 0">
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 8.68vh;display: flex;align-items: center; border-bottom: 3px solid #6380E4;">
     <div class="container-fluid" style="position: relative; width: -webkit-fill-available;">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; align-items: center;">
-                <a class="nav-link" href="{{route('listablebooks')}}">< Назад</a>
-            </ul>
-        </div>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; align-items: center;">
+            <a class="nav-link" href="{{route('listablebooks')}}">< Назад</a>
+        </ul>
         <div id="titleBook"></div>
     </div>
 </nav>
@@ -84,8 +82,8 @@
     </div>
 
 
-    <div style="overflow-y: overlay; overflow-x: overlay; height: 77.57vh;">
-        <div id="loading" style="display: none; width: 100%; height: -webkit-fill-available; z-index: 999 ">
+    <div style="overflow-y: overlay; overflow-x: overlay; height: 77.57vh; position: relative">
+        <div id="loading">
             <div style="display: flex; justify-content: center; align-items: center; width: 100%;height: -webkit-fill-available;">
                 <div class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -168,48 +166,48 @@
     });
 
     function loadPage(page) {
-        $('#bookContent').hide();
+        // $('#bookContent').hide();
         $('#loading').show();
-        if (cache[page]) {
-            // Если страница в кэше, используйте кэшированную версию
-            $('#bookContent').html(cache[page]);
-            currentPage = page;
-            $('#currentPageInput').val(currentPage);
-            $('#allPages').text(totalPages)
-            $('#pagesRange').attr({
-                "value": currentPage
-            });
-            $('#loading').hide();
-        } else {
+        // if (cache[page]) {
+        //     // Если страница в кэше, используйте кэшированную версию
+        //     $('#bookContent').html(cache[page]);
+        //     currentPage = page;
+        //     $('#currentPageInput').val(currentPage);
+        //     $('#allPages').text(totalPages)
+        //     $('#pagesRange').attr({
+        //         "value": currentPage
+        //     });
+        //     $('#loading').hide();
+        // } else {
             // Если страницы нет в кэше, загрузите ее
-            $.ajax({
-                url: allPagesUrl[page-1],
-                type: 'GET',
-                success: function(res) {
-                    cache[page] = res; // Добавление страницы в кэш
-                    $('#bookContent').html(res);
-                    currentPage = page;
-                    $('#allPages').text(totalPages)
-                    $('#currentPageInput').val(currentPage);
-                    $('#pagesRange').attr({
-                        "value": currentPage
-                    });
-                    if (currentPage === 1) {
-                        $('#prevPage').css('display', 'none');
-                    } else {
-                        $('#prevPage').css('display', 'block');
-                    }
-                    if (currentPage === totalPages) {
-                        $('#nextPage').css('display', 'none');
-                    } else {
-                        $('#nextPage').css('display', 'block');
-                    }
-                    $('#loading').hide();
-                }
-            });
-        }
-        $('#bookContent').show();
-        $('#loading').hide();
+            // $.ajax({
+            //     url: allPagesUrl[page-1],
+            //     type: 'GET',
+            //     success: function(res) {
+            //         cache[page] = res; // Добавление страницы в кэш
+            //         $('#bookContent').html(res);
+            //         currentPage = page;
+            //         $('#allPages').text(totalPages)
+            //         $('#currentPageInput').val(currentPage);
+            //         $('#pagesRange').attr({
+            //             "value": currentPage
+            //         });
+            //         if (currentPage === 1) {
+            //             $('#prevPage').css('display', 'none');
+            //         } else {
+            //             $('#prevPage').css('display', 'block');
+            //         }
+            //         if (currentPage === totalPages) {
+            //             $('#nextPage').css('display', 'none');
+            //         } else {
+            //             $('#nextPage').css('display', 'block');
+            //         }
+            //         $('#loading').hide();
+            //     }
+            // });
+        // }
+        // $('#bookContent').show();
+        // $('#loading').hide();
     }
 
     $('#currentPageInput').on('change', function() {
