@@ -166,7 +166,7 @@
     });
 
     function loadPage(page) {
-        $('#loading').show();
+
         if (cache[page]) {
             // Если страница в кэше, используйте кэшированную версию
             $('#bookContent').html(cache[page]);
@@ -177,6 +177,7 @@
                 "value": currentPage
             });
         } else {
+            $('#loading').show();
             $.ajax({
                 url: allPagesUrl[page-1],
                 type: 'GET',
@@ -199,10 +200,11 @@
                     } else {
                         $('#nextPage').css('display', 'block');
                     }
+                    $('#loading').hide();
                 }
             });
         }
-        $('#loading').hide();
+
     }
 
     $('#currentPageInput').on('change', function() {
