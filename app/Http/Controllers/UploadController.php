@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\YoutubeURL;
+use Karkow\MuPdf\Pdf;
 use function Psy\debug;
 
 class UploadController extends Controller
@@ -266,6 +267,7 @@ class UploadController extends Controller
         $file= $request->file('file');
         $filename= date('YmdHi').hash_hmac('sha256',$file->getClientOriginalName(),'file');
         $file-> move(public_path('books/'.$filename), $filename. '.' . $file->getClientOriginalExtension());
+        ini_set('max_execution_time', 300);
 
 
         $pdf = new \TvT\PdfToHtml\Pdf(public_path('books/'.$filename.'/'.$filename. '.' . $file->getClientOriginalExtension()), [
@@ -284,6 +286,8 @@ class UploadController extends Controller
                 'onlyContent' => true,
             ]
         ]);
+
+
         print_r($pdf);
 
         $htmlFolderPath = public_path('books/'.$filename.'/html_pages');
