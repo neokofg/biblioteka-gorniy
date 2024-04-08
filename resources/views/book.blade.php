@@ -92,7 +92,9 @@
 
         </div>
         <div class="bookPage" id="bookDetails">
-            <div id="bookContent" style="align-content: start;z-index: -1;rotate: 0deg;height: -webkit-fill-available;"></div>
+            <div id="bookContent">
+
+            </div>
         </div>
     </div>
     <div class="book_navigation">
@@ -117,8 +119,8 @@
     var totalPages = 0; // Общее количество страниц
     var allPagesUrl = []
     var cache = {}; // Кэш для страниц
-
-
+    var windowWidth = 0
+    var windowHeight = 0
 
     var scale = 1; // Начальный масштаб
     var rotate = 0;
@@ -167,8 +169,10 @@
 
     function loadPage(page) {
 
+        windowWidth = $('#bookDetails').width();
+        windowHeight = $('#bookDetails').height();
+
         if (cache[page]) {
-            // Если страница в кэше, используйте кэшированную версию
             $('#bookContent').html(cache[page]);
             currentPage = page;
             $('#currentPageInput').val(currentPage);
@@ -176,14 +180,42 @@
             $('#pagesRange').attr({
                 "value": currentPage
             });
+
+
         } else {
             $('#loading').show();
             $.ajax({
                 url: allPagesUrl[page-1],
                 type: 'GET',
                 success: function(res) {
-                    cache[page] = res; // Добавление страницы в кэш
-                    $('#bookContent').html(res);
+                    var $res = $(res);
+                    var imgSrc = $res.find('img').attr('src');
+                    var img = new Image();
+                    img.src = imgSrc;
+                    img.onload = function() {
+                        var imgWidth = img.width;
+                        var imgHeight = img.height;
+
+                        var aspectRatio = imgWidth / imgHeight;
+
+                        // Проверяем, является ли изображение маленьким или большим
+                        if (imgWidth <= windowWidth && imgHeight <= windowHeight) {
+                            // Маленькое изображение, увеличиваем его размеры
+                            var targetWidth = Math.min(windowWidth, imgWidth * 1.5); // Увеличиваем ширину на 50%, но не более ширины экрана
+                            var targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
+                        } else {
+                            // Большое изображение, уменьшаем его размеры
+                            var targetWidth = Math.min(windowWidth, imgWidth); // Не увеличиваем больше ширины экрана
+                            var targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
+                        }
+
+                        $res.find('img').attr('width', targetWidth);
+                        $res.find('img').attr('height', targetHeight);
+                        $res.css({width: '', height: ''})
+
+                    }
+                    cache[page] = $res // Добавление страницы в кэш
+                    $('#bookContent').html($res);
                     currentPage = page;
                     $('#allPages').text(totalPages)
                     $('#currentPageInput').val(currentPage);

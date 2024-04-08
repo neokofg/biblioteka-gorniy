@@ -1,6 +1,6 @@
 .container-book {
     width: 100%;
-    transform-origin: top left;
+    transform-origin: center top;
     transition: transform 0.2s linear;
     user-select: none;
 }
@@ -10,9 +10,26 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform-origin: top left;
+    transform-origin: center top;
     transition: transform 0.2s linear;
     user-select: none;
+    height: -webkit-fill-available;
+}
+
+#bookContent {
+    align-content: start;
+    z-index: -1;
+    rotate: 0deg;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bookContent > div {
+    width: auto;
+    height: auto;
 }
 
 .btnNavigation {
