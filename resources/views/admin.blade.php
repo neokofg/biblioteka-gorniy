@@ -121,16 +121,17 @@
                     </div>
                 </div>
                 <div class="style-guide-content">
-
                     <div class="row">
                         <div class="style-guide-content-item">
                             <form action="{{route('UploadListableBook')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="w-form">
                                     <h6>PDF файл</h6>
-                                    <input name="file" type="file"><br><br>
+                                    <input name="file" type="file" accept="application/pdf" required><br><br>
+                                    <h6>Обложка книги</h6>
+                                    <input name="image" type="file" accept="image/png,image/jpeg" required><br><br>
                                     <h6>Заголовок</h6>
-                                    <input type="text" class="form-input w-input" name="name" maxlength="256" placeholder="Описание"><br>
+                                    <input required type="text" class="form-input w-input" name="name" maxlength="256" placeholder="Описание"><br>
                                     <h6>Описание</h6>
                                     <textarea type="text" class="form-input w-input" name="description">Описание</textarea><br>
                                     <button class="button w-button">

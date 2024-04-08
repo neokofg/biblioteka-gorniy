@@ -258,6 +258,7 @@ class UploadController extends Controller
     {
         $validateFields = $request->validate([
             'file' => 'required|file|mimes:pdf',
+            'image' => 'required|mimes:png,jpg,jpeg,webp',
             'name' => 'required',
             'description' => 'required'
         ]);
@@ -267,6 +268,10 @@ class UploadController extends Controller
         $file= $request->file('file');
         $filename= date('YmdHi').hash_hmac('sha256',$file->getClientOriginalName(),'file');
         $file-> move(public_path('books/'.$filename), $filename. '.' . $file->getClientOriginalExtension());
+
+        $image_file = $request->file('image');
+        $image_file->move(public_path('books/'.$filename), 'title');
+
         ini_set('max_execution_time', 300);
 
 

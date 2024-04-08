@@ -3,6 +3,8 @@
     transform-origin: center top;
     transition: transform 0.2s linear;
     user-select: none;
+    position: relative;
+    height: 82vh;
 }
 
 .bookPage {
@@ -50,7 +52,7 @@
 }
 
 .book_navigation {
-    height: 8.68vh;
+    height: 10vh;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -76,10 +78,6 @@
 }
 
 #titleBook {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
     font-weight: bold;
     font-size: 30px
 }

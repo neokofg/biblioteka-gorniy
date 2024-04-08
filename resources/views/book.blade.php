@@ -26,12 +26,21 @@
 </head>
 
 <body style="padding: 0; margin: 0">
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 8.68vh;display: flex;align-items: center; border-bottom: 3px solid #6380E4;">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 8vh;display: flex;align-items: center; border-bottom: 3px solid #6380E4;">
     <div class="container-fluid" style="position: relative; width: -webkit-fill-available;">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="display: flex; align-items: center;">
             <a class="nav-link" href="{{route('listablebooks')}}">< Назад</a>
         </ul>
         <div id="titleBook"></div>
+        <div style="margin-left: 10px">
+            <svg width="30" id="changeVision"  height="30" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 8C10.5 8.66304 10.2366 9.29893 9.76777 9.76777C9.29893 10.2366 8.66304 10.5 8 10.5C7.33696 10.5 6.70107 10.2366 6.23223 9.76777C5.76339 9.29893 5.5 8.66304 5.5 8C5.5 7.33696 5.76339 6.70107 6.23223 6.23223C6.70107 5.76339 7.33696 5.5 8 5.5C8.66304 5.5 9.29893 5.76339 9.76777 6.23223C10.2366 6.70107 10.5 7.33696 10.5 8Z" fill="#212529"/>
+                <path d="M0 8C0 8 3 2.5 8 2.5C13 2.5 16 8 16 8C16 8 13 13.5 8 13.5C3 13.5 0 8 0 8ZM8 11.5C8.92826 11.5 9.8185 11.1313 10.4749 10.4749C11.1313 9.8185 11.5 8.92826 11.5 8C11.5 7.07174 11.1313 6.1815 10.4749 5.52513C9.8185 4.86875 8.92826 4.5 8 4.5C7.07174 4.5 6.1815 4.86875 5.52513 5.52513C4.86875 6.1815 4.5 7.07174 4.5 8C4.5 8.92826 4.86875 9.8185 5.52513 10.4749C6.1815 11.1313 7.07174 11.5 8 11.5Z" fill="#212529"/>
+            </svg>
+
+        </div>
+
+
     </div>
 </nav>
 <div class="container-book">
@@ -41,7 +50,6 @@
     <svg class="btnNavigation" style="right: 10px;" id="nextPage" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.646 1.64604C4.69245 1.59948 4.74762 1.56253 4.80837 1.53733C4.86911 1.51212 4.93423 1.49915 5 1.49915C5.06577 1.49915 5.13089 1.51212 5.19163 1.53733C5.25238 1.56253 5.30756 1.59948 5.354 1.64604L11.354 7.64604C11.4006 7.69248 11.4375 7.74766 11.4627 7.80841C11.4879 7.86915 11.5009 7.93427 11.5009 8.00004C11.5009 8.06581 11.4879 8.13093 11.4627 8.19167C11.4375 8.25242 11.4006 8.30759 11.354 8.35404L5.354 14.354C5.26011 14.4479 5.13278 14.5007 5 14.5007C4.86723 14.5007 4.73989 14.4479 4.646 14.354C4.55211 14.2602 4.49937 14.1328 4.49937 14C4.49937 13.8673 4.55211 13.7399 4.646 13.646L10.293 8.00004L4.646 2.35404C4.59944 2.30759 4.56249 2.25242 4.53729 2.19167C4.51208 2.13093 4.49911 2.06581 4.49911 2.00004C4.49911 1.93427 4.51208 1.86915 4.53729 1.80841C4.56249 1.74766 4.59944 1.69249 4.646 1.64604Z" fill="#212529"/>
     </svg>
-
     <div class="zoomBtns">
         <svg class="btnZoom" style="background: white; " id="zoomOut" width="16" height="16" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_2323_31)">
@@ -80,57 +88,80 @@
         </svg>
 
     </div>
-
-
-    <div style="overflow-y: overlay; overflow-x: overlay; height: 77.57vh; position: relative">
-        <div id="loading">
-            <div style="display: flex; justify-content: center; align-items: center; width: 100%;height: -webkit-fill-available;">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+    <div id="loading">
+        <div style="display: flex; justify-content: center; align-items: center; width: -webkit-fill-available; height: -webkit-fill-available;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
-
         </div>
+
+    </div>
+
+    <div style="overflow-y: overlay; overflow-x: overlay; height: -webkit-fill-available;">
+
         <div class="bookPage" id="bookDetails">
             <div id="bookContent">
 
             </div>
         </div>
     </div>
-    <div class="book_navigation">
-        <input type="range" value=1 class="form-range" id="pagesRange">
-        <p id="currentPage">
-            <span>Страница </span>
-            <input type="text" id="currentPageInput" style="width: 50px; text-align: center;" />
-            <span> из </span>
-            <span id="allPages"> из </span>
-        </p>
-    </div>
+
+</div>
+<div class="book_navigation">
+    <input type="range" value=1 class="form-range" id="pagesRange">
+    <p id="currentPage">
+        <span>Страница </span>
+        <input type="text" id="currentPageInput" style="width: 50px; text-align: center;" />
+        <span> из </span>
+        <span id="allPages"> из </span>
+    </p>
 </div>
 
-
-<script src='{{asset('js/main.js')}}' type="text/javascript "></script>
+{{--<script src='{{asset('js/main.js')}}' type="text/javascript "></script>--}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<script src="//code.jivo.ru/widget/pPTVUYW9y8" async=""></script>
 <script>
-    var currentPage = 1; // Текущая страница
-    var totalPages = 0; // Общее количество страниц
-    var allPagesUrl = []
-    var cache = {}; // Кэш для страниц
-    var windowWidth = 0
-    var windowHeight = 0
 
-    var scale = 1; // Начальный масштаб
-    var rotate = 0;
+    let viewControl = true; // отобразить интерфейс
+    let currentPage = 1; // Текущая страница
+    let totalPages = 0; // Общее количество страниц
+    let allPagesUrl = [];
+    const cache = {}; // локал Кэш для страниц
+    let windowWidth = 0;
+    let windowHeight = 0;
+    let scale = 1; // Начальный масштаб
+    let rotate = 0;
+    const bookDetails = $('#bookDetails')
+    const pagesRange = $('#pagesRange')
+    const currentPageInput = $('#currentPageInput')
+    const pageAction = $('.bookPage');
+    let x1 = null;
+    let y1 = null;
+
+    windowWidth = bookDetails.width();
+    windowHeight = bookDetails.height();
 
 
+    // СОКРЫТИЕ ИНТЕРФЕЙСА
+    $('#changeVision').click(function(){
+        if(viewControl) {
+            $('#changeVision').html('<path d="M10.79 12.912L9.176 11.297C8.55184 11.5202 7.87715 11.5615 7.23042 11.4162C6.58369 11.2709 5.99153 10.9449 5.52282 10.4762C5.05411 10.0075 4.72814 9.4153 4.58283 8.76858C4.43752 8.12185 4.47885 7.44715 4.702 6.823L2.642 4.763C0.938 6.278 0 8 0 8C0 8 3 13.5 8 13.5C8.9604 13.4967 9.90994 13.2965 10.79 12.912ZM5.21 3.088C6.09005 2.70342 7.03959 2.5033 8 2.5C13 2.5 16 8 16 8C16 8 15.061 9.721 13.359 11.238L11.297 9.176C11.5202 8.55184 11.5615 7.87714 11.4162 7.23042C11.2709 6.58369 10.9449 5.99152 10.4762 5.52282C10.0075 5.05411 9.41531 4.72814 8.76858 4.58283C8.12185 4.43752 7.44716 4.47884 6.823 4.702L5.21 3.088Z" fill="#212529"/> <path d="M5.525 7.646C5.46999 8.03031 5.50524 8.42215 5.62796 8.79047C5.75068 9.15879 5.95749 9.49347 6.23201 9.76799C6.50653 10.0425 6.84121 10.2493 7.20953 10.372C7.57785 10.4948 7.96969 10.53 8.354 10.475L5.525 7.646ZM10.475 8.354L7.646 5.524C8.03031 5.46899 8.42215 5.50424 8.79047 5.62696C9.15879 5.74968 9.49347 5.95649 9.76799 6.23101C10.0425 6.50553 10.2493 6.8402 10.372 7.20853C10.4948 7.57685 10.53 7.96869 10.475 8.353V8.354ZM13.646 14.354L1.646 2.354L2.354 1.646L14.354 13.646L13.646 14.354Z" fill="#212529"/>');
+            $('.btnNavigation').hide()
+            $('.zoomBtns').hide()
+        } else {
+            $('#changeVision').html('<path d="M10.5 8C10.5 8.66304 10.2366 9.29893 9.76777 9.76777C9.29893 10.2366 8.66304 10.5 8 10.5C7.33696 10.5 6.70107 10.2366 6.23223 9.76777C5.76339 9.29893 5.5 8.66304 5.5 8C5.5 7.33696 5.76339 6.70107 6.23223 6.23223C6.70107 5.76339 7.33696 5.5 8 5.5C8.66304 5.5 9.29893 5.76339 9.76777 6.23223C10.2366 6.70107 10.5 7.33696 10.5 8Z" fill="#212529"/><path d="M0 8C0 8 3 2.5 8 2.5C13 2.5 16 8 16 8C16 8 13 13.5 8 13.5C3 13.5 0 8 0 8ZM8 11.5C8.92826 11.5 9.8185 11.1313 10.4749 10.4749C11.1313 9.8185 11.5 8.92826 11.5 8C11.5 7.07174 11.1313 6.1815 10.4749 5.52513C9.8185 4.86875 8.92826 4.5 8 4.5C7.07174 4.5 6.1815 4.86875 5.52513 5.52513C4.86875 6.1815 4.5 7.07174 4.5 8C4.5 8.92826 4.86875 9.8185 5.52513 10.4749C6.1815 11.1313 7.07174 11.5 8 11.5Z" fill="#212529"/>');
+            $('.btnNavigation').show()
+            $('.zoomBtns').show()
+        }
+        viewControl = !viewControl
+    });
+
+    // ИНТЕРФЕЙС ИЗМЕНЕНИЯ КОНТЕНТА
     $('#zoomIn').click(function() {
         scale += 0.1;
         $('.bookPage').css('transform', 'scale(' + scale + ')');
     });
-
     $('#zoomOut').click(function() {
         if (scale > 0.1) {
             scale -= 0.1;
@@ -140,154 +171,44 @@
     $('#rotateBtn').click(function() {
         if(rotate < 360) {
             rotate += 90;
-            console.log(rotate)
             $('#bookContent').css('rotate', rotate + 'deg');
         } else {
             rotate = 0
             $('#bookContent').css('rotate', rotate + 'deg');
-
         }
     });
 
-    $.ajax({
-        url: '{{env('APP_URL')}}api/book/{{$id}}',
-        type: 'GET',
-        success: function(res) {
-            totalPages = res.count_pages; // Установка общего количества страниц
-            allPagesUrl = res.html_pages
-            $('#titleBook').text(res.name)
-            $('#pagesRange').attr({
-                "max": res.count_pages,
-                "min": 1,
-                "step": 1,
-
-            });
-
-            loadPage(1); // Загрузка первой страницы
-        }
-    });
-
-    function loadPage(page) {
-
-        windowWidth = $('#bookDetails').width();
-        windowHeight = $('#bookDetails').height();
-
-        if (cache[page]) {
-            $('#bookContent').html(cache[page]);
-            currentPage = page;
-            $('#currentPageInput').val(currentPage);
-            $('#allPages').text(totalPages)
-            $('#pagesRange').attr({
-                "value": currentPage
-            });
-
-
-        } else {
-            $('#loading').show();
-            $.ajax({
-                url: allPagesUrl[page-1],
-                type: 'GET',
-                success: function(res) {
-                    var $res = $(res);
-                    var imgSrc = $res.find('img').attr('src');
-                    var img = new Image();
-                    img.src = imgSrc;
-                    img.onload = function() {
-                        var imgWidth = img.width;
-                        var imgHeight = img.height;
-
-                        var aspectRatio = imgWidth / imgHeight;
-
-                        // Проверяем, является ли изображение маленьким или большим
-                        if (imgWidth <= windowWidth && imgHeight <= windowHeight) {
-                            // Маленькое изображение, увеличиваем его размеры
-                            var targetWidth = Math.min(windowWidth, imgWidth * 1.5); // Увеличиваем ширину на 50%, но не более ширины экрана
-                            var targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
-                        } else {
-                            // Большое изображение, уменьшаем его размеры
-                            var targetWidth = Math.min(windowWidth, imgWidth); // Не увеличиваем больше ширины экрана
-                            var targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
-                        }
-
-                        $res.find('img').attr('width', targetWidth);
-                        $res.find('img').attr('height', targetHeight);
-                        $res.css({width: '', height: ''})
-
-                    }
-                    cache[page] = $res // Добавление страницы в кэш
-                    $('#bookContent').html($res);
-                    currentPage = page;
-                    $('#allPages').text(totalPages)
-                    $('#currentPageInput').val(currentPage);
-                    $('#pagesRange').attr({
-                        "value": currentPage
-                    });
-                    if (currentPage === 1) {
-                        $('#prevPage').css('display', 'none');
-                    } else {
-                        $('#prevPage').css('display', 'block');
-                    }
-                    if (currentPage === totalPages) {
-                        $('#nextPage').css('display', 'none');
-                    } else {
-                        $('#nextPage').css('display', 'block');
-                    }
-                    $('#loading').hide();
-                }
-            });
-        }
-
-    }
-
-    $('#currentPageInput').on('change', function() {
+    // ИНТЕРФЕЙС НАВИГАЦИИ
+    currentPageInput.on('change', function() {
         var newPage = parseInt($(this).val());
         if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
             loadPage(newPage);
         }
     });
-
-    $('#pagesRange').on('change', function () {
+    pagesRange.on('change', function () {
         var newPage = parseInt($(this).val())
         loadPage(newPage)
     })
-
     $('#prevPage').click(function(e) {
         e.preventDefault();
-        if (currentPage > 1) {
-            loadPage(currentPage - 1);
-        } else {
-            return
-        }
+        if (currentPage > 1) loadPage(currentPage - 1);
     });
-
     $('#nextPage').click(function(e) {
         e.preventDefault();
-        if (currentPage < totalPages) {
-            loadPage(currentPage + 1);
-        } else {
-            return
-        }
-    });
+        if (currentPage < totalPages) loadPage(currentPage + 1);
 
+    });
     $(document).on('touchstart', touch);
     $(document).on('touchmove', move);
-
-    const pageAction = $('.bookPage');
-
-    let x1 = null;
-    let y1 = null;
-
     function touch(event) {
         const firstTouch = event.touches[0];
         x1 = firstTouch.clientX;
         y1 = firstTouch.clientY;
-        // console.log(x1, y1);
     }
     function move (event) {
         if(!x1 || !y1) return false;
         let x2 = event.touches[0].clientX
         let y2 = event.touches[0].clientY
-        console.log(x2, y2)
         let xDiff = x2 - x1
         let yDiff = y2 - y1
 
@@ -311,6 +232,83 @@
         x1 = null
         y1 = null
     }
+
+    $.ajax({
+        url: '{{env('APP_URL')}}api/book/{{$id}}',
+        type: 'GET',
+        success: function(res) {
+            totalPages = res.count_pages;
+            allPagesUrl = res.html_pages
+            $('#titleBook').text(res.name)
+            pagesRange.attr({
+                "max": res.count_pages,
+                "min": 1,
+                "step": 1,
+            });
+            loadPage(1); // Загрузка первой страницы
+        }
+    });
+
+    function loadPage(page) {
+        currentPage = page;
+        currentPageInput.val(currentPage);
+        $('#allPages').text(totalPages)
+        pagesRange.attr({
+            "value": currentPage
+        });
+
+        if (cache[page]) {
+            $('#bookContent').html(cache[page]);
+        } else {
+            $('#loading').show();
+            $.ajax({
+                url: allPagesUrl[page-1],
+                type: 'GET',
+                success: function(res) {
+                    const $res = $(res);
+                    const imgSrc = $res.find('img').attr('src');
+                    const img = new Image();
+                    img.src = imgSrc;
+                    img.onload = function() {
+                        const imgWidth = img.width;
+                        const imgHeight = img.height;
+                        const aspectRatio = imgWidth / imgHeight;
+                        let targetWidth = 0;
+                        let targetHeight = 0;
+                        // Проверяем, является ли изображение маленьким или большим
+                        if (imgWidth <= windowWidth && imgHeight <= windowHeight) {
+                            // Маленькое изображение, увеличиваем его размеры
+                            targetWidth = Math.min(windowWidth, imgWidth * 1.5); // Увеличиваем ширину на 50%, но не более ширины экрана
+                            targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
+                        } else {
+                            // Большое изображение, уменьшаем его размеры
+                            targetWidth = Math.min(windowWidth, imgWidth); // Не увеличиваем больше ширины экрана
+                            targetHeight = targetWidth / aspectRatio; // Поддерживаем пропорции
+                        }
+
+                        $res.find('img').attr('width', targetWidth);
+                        $res.find('img').attr('height', targetHeight);
+                        $res.css({width: '', height: ''})
+                    }
+                    cache[page] = $res // Добавление страницы в кэш
+                    $('#bookContent').html($res);
+                    if (currentPage <= 1 || !viewControl) {
+                        $('#prevPage').css('display', 'none');
+                    } else {
+                        $('#prevPage').css('display', 'block');
+                    }
+                    if (currentPage === totalPages || !viewControl) {
+                        $('#nextPage').css('display', 'none');
+                    } else {
+                        $('#nextPage').css('display', 'block');
+                    }
+                    $('#loading').hide();
+                }
+            });
+        }
+    }
+
+
 </script>
 </body>
 

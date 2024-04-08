@@ -39,10 +39,11 @@
             </div>
         <div role="list" style="margin-bottom: 25px" class="blog-grid w-dyn-items">
             @foreach($books as $book)
-                <div role="listitem" style="height: 300px; width: 100%" class="w-dyn-item">
+                <div role="listitem" style="width: 100%" class="w-dyn-item">
                     <div class="panel" style="height: 100%">
                         <img src="" alt="">
                         <div class="panel-body panel-body-small">
+                            <img src="{{asset('books/'.$book->file.'/title')}}" />
                             <h6 class="medium-heading">{{$book->name}}</h6>
                             <p>{{$book->description}}</p>
                             <div class="blog-panel-foot">
